@@ -1,5 +1,5 @@
 export interface PortfoliosSimulation {
-  portfolios: Portfolio;
+  portfolios: Portfolio[];
   goal_percentiles: number[];
   wealth_returns: number[];
   percentiles: number[];

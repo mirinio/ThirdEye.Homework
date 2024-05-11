@@ -41,6 +41,7 @@ if (app.Environment.IsDevelopment())
 var origins = builder.Configuration.GetSection("CorsUrls").Get<string[]>();
 app.UseCors(c =>
 {
+    c.AllowAnyHeader();
     if (origins != null) c.WithOrigins(origins);
 });
 

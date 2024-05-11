@@ -4,8 +4,12 @@ import { ChartModule } from 'primeng/chart';
 import { ApiClientService } from '../../services/api-client/api-client.service';
 import { AsyncPipe } from '@angular/common';
 import { CardModule } from 'primeng/card';
-import { BehaviorSubject, map, Observable, of, switchMap } from 'rxjs';
-import { AssetClassSummary, AssetClassSummaryComponent } from '../asset-class-summary/asset-class-summary.component';
+import { BehaviorSubject, combineLatest, EMPTY, map, Observable, of, switchMap } from 'rxjs';
+import {
+  AssetClassAllocation,
+  AssetClassSummaryComponent,
+  ScenarioAssetClassesSummary
+} from '../asset-class-summary/asset-class-summary.component';
 
 @Component({
   selector: 'app-home',
@@ -28,11 +32,16 @@ export class HomeComponent implements OnInit {
   private readonly apiClient = inject(ApiClientService);
   protected readonly scenarioSpaces$ = this.apiClient.getScenarioSpaces();
   protected readonly scenarioSpaceSubject = new BehaviorSubject<string | undefined>(undefined);
-  protected readonly assetClasses$: Observable<AssetClassSummary[]> = this.scenarioSpaceSubject.pipe(switchMap(name => {
-    if (!name) return of([]);
-    console.log(name);
-    return this.apiClient.getScenarioSpaceSummaryByName(name).pipe(map(summary =>
-      Object.keys(summary.asset_classes).map<AssetClassSummary>(asset => ({ name: asset, allocation: 0 }))));
+  protected readonly scenarioAssetClassSummary$: Observable<ScenarioAssetClassesSummary> = this.scenarioSpaceSubject.pipe(switchMap(name => {
+    if (!name) return EMPTY;
+
+    return combineLatest([this.apiClient.getScenarioSpaceSummaryByName(name), of(name)]).pipe(map(([summary, name]) => (<ScenarioAssetClassesSummary>{
+      name: name,
+      assetClasses: Object.keys(summary.asset_classes).map<AssetClassAllocation>(asset => ({
+        name: asset,
+        allocation: 0
+      }))
+    })));
   }));
 
   ngOnInit() {

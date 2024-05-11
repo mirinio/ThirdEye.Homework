@@ -6,9 +6,14 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { PortfolioAsset, PortfoliosSimulation } from '../../models/portfolioSimulation.model';
 import { ApiClientService } from '../../services/api-client/api-client.service';
+import { BehaviorSubject } from 'rxjs';
 
 
-export interface AssetClassSummary {
+export interface ScenarioAssetClassesSummary {
+  name: string;
+  assetClasses: AssetClassAllocation[];
+}
+export interface AssetClassAllocation {
   name: string;
   allocation: number;
 }
@@ -38,22 +43,29 @@ export class AssetClassSummaryComponent {
   private fb = inject(FormBuilder);
   protected form = this.fb.array<FormGroup<AssetClassGroup>>([]);
 
-  @Input() set assetClasses(assetClasses: AssetClassSummary[] | null) {
-    if (!assetClasses) return;
-    this.form.clear();
+  protected scenarioSpaceNameSubject = new BehaviorSubject<string | undefined>(undefined);
 
-    assetClasses.forEach(asset => {
+  @Input() set assetClasses(scenarioSummary: ScenarioAssetClassesSummary | null) {
+    if(!scenarioSummary || !scenarioSummary.assetClasses.length) return;
+    
+    this.form.clear();
+    this.scenarioSpaceNameSubject.next(scenarioSummary.name);
+    scenarioSummary.assetClasses.forEach(asset => {
         this.form.controls.push(this.createAssetClassGroup(asset));
       }
     );
+    this.form.updateValueAndValidity();
   }
 
   simulate(): void {
-    const simulation = this.createPortfolio();
-    this.apiClient.simulatePortfolio(simulation);
+
+    if(this.scenarioSpaceNameSubject.value && this.form.controls.length) {
+      const simulation = this.createPortfolio();
+      this.apiClient.simulatePortfolio(simulation, this.scenarioSpaceNameSubject.value).subscribe();
+    }
   }
 
-  private createAssetClassGroup(asset: AssetClassSummary): FormGroup<AssetClassGroup> {
+  private createAssetClassGroup(asset: AssetClassAllocation): FormGroup<AssetClassGroup> {
     return this.fb.group<AssetClassGroup>({
       assetName: this.fb.control<string | null>({ value: asset.name, disabled: true }),
       allocation: this.fb.control<number | null>(asset.allocation)
@@ -63,14 +75,14 @@ export class AssetClassSummaryComponent {
 
   private createPortfolio(): PortfoliosSimulation {
     const assets = this.form.controls.map<PortfolioAsset>(group => ({
-      asset_class: group.value.assetName ?? '',
-      initial_allocation: group.value.allocation ?? 0,
-      asset_mgmt_fee: 0.0015,
-      initial_load_fee: 0
-    }));
+        asset_class: group.controls.assetName.value ?? '',
+        initial_allocation: group.controls.allocation.value ?? 0,
+        asset_mgmt_fee: 0.0015,
+        initial_load_fee: 0
+      }));
 
     return {
-      portfolios: {
+      portfolios: [{
         name: 'test',
         assets: assets,
         rebalancing_frequency: 2,
@@ -80,7 +92,7 @@ export class AssetClassSummaryComponent {
         capital_gain_tax_rate: 0.15,
         income_tax_rate: 0.15,
         max_credit_fraction: 0.5
-      },
+      }],
       goal_percentiles: [5, 50],
       wealth_returns: [50],
       scenarios: 1000,
