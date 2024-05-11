@@ -20,6 +20,7 @@ public class ScenarioSpaceQueries : IScenarioSpaceQueries
             Id = s.Id,
             Name = s.Name,
             AssetClassCashType = s.AssetClassCashType,
+            RequestCount = s.RequestCount
         }).ToListAsync(cancellationToken);
     }
 }

@@ -5,4 +5,5 @@ public class ScenarioSpace
     public Guid Id { get; set; }
     public string Name { get; set; }
     public AssetClassCashType AssetClassCashType { get; set; }
+    public int RequestCount { get; set; }
 }

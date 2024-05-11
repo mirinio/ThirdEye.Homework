@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { ChartModule } from 'primeng/chart';
 import { ApiClientService } from '../../services/api-client/api-client.service';
@@ -10,8 +10,8 @@ import {
   AssetClassSummaryComponent,
   ScenarioAssetClassesSummary
 } from '../asset-class-summary/asset-class-summary.component';
-import { ScenarioSpaceSummary } from '../../models/scenario-space-summary.model';
 import { ScenarioSpace } from '../../models/scenario-space.model';
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +21,8 @@ import { ScenarioSpace } from '../../models/scenario-space.model';
     ChartModule,
     AsyncPipe,
     CardModule,
-    AssetClassSummaryComponent
+    AssetClassSummaryComponent,
+    TagModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',

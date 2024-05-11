@@ -1,7 +1,8 @@
 <div class="flex bg-primary shadow-5">
 @for (item of scenarioSpaces$ | async; track item.id) {
-  <div class="flex font-semibold p-3 m-1 hover:bg-cyan-500 cursor-pointer" (click)="loadSummary(item)">
+  <div class="flex font-semibold p-3 m-1 hover:bg-cyan-500 cursor-pointer text-center align-items-center" (click)="loadSummary(item)">
     {{ item.name }}
+    <p-tag class="p-2" severity="success" [value]="item.requestCount.toString()"/>
   </div>
 } @empty {
   <span>There are no scenario spaces available</span>

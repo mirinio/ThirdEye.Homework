@@ -15,14 +15,17 @@ public class PortfolioSimulationCommand : IRequest<AlphaSimulateDto?>
 internal sealed class PortfolioSimulationCommandHandler : IRequestHandler<PortfolioSimulationCommand, AlphaSimulateDto?>
 {
     private readonly IPortfolioAnalyticsService _analyticsService;
-
-    public PortfolioSimulationCommandHandler(IPortfolioAnalyticsService analyticsService)
+    private readonly IScenarioSpaceStore _scenarioSpaceStore;
+    public PortfolioSimulationCommandHandler(IPortfolioAnalyticsService analyticsService, IScenarioSpaceStore scenarioSpaceStore)
     {
         _analyticsService = analyticsService;
+        _scenarioSpaceStore = scenarioSpaceStore;
     }
     
     public async Task<AlphaSimulateDto?> Handle(PortfolioSimulationCommand request, CancellationToken cancellationToken)
     {
-        return await _analyticsService.Simulate(request.Simulation, request.Name, cancellationToken);
+        var result = await _analyticsService.Simulate(request.Simulation, request.Name, cancellationToken);
+        await _scenarioSpaceStore.UpdateRequestCountByNameAsync(request.Name);
+        return result;
     }
 }

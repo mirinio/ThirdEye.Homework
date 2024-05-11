@@ -1,6 +1,7 @@
 export interface ScenarioSpace {
   id: string;
   name: string;
+  requestCount: number;
   assetClassCashType: AssetClassCashType;
 }
 
