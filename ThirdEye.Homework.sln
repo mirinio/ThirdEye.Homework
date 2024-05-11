@@ -1,8 +1,51 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DDB10E20-29CF-47AF-9D14-0297901BE44E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{18D86BFC-D209-4259-8BF2-5E437C3B3D89}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastructure", "{DD5CAE30-A7A0-40F7-988A-DA2EEF23A15F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "presentation", "presentation", "{029635CE-2EC6-4DF5-A39A-53EB0CF63944}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThirdEye.Homework.Application", "src\core\ThirdEye.Homework.Application\ThirdEye.Homework.Application.csproj", "{09EAC838-201D-418E-A792-D98B663D9D79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThirdEye.Homework.Domain", "src\core\ThirdEye.Homework.Domain\ThirdEye.Homework.Domain.csproj", "{DE91FBFE-E0BA-4F19-90B4-03230303D932}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThirdEye.Homework.Persistence", "src\infrastructure\ThirdEye.Homework.Persistence\ThirdEye.Homework.Persistence.csproj", "{24FDD15E-8349-4C1E-9293-44B01CD2340C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThirdEye.Homework.Api", "src\presentation\ThirdEye.Homework.Api\ThirdEye.Homework.Api.csproj", "{CE0B19B1-E1C2-4D9A-9DF4-529E34EDF013}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{18D86BFC-D209-4259-8BF2-5E437C3B3D89} = {DDB10E20-29CF-47AF-9D14-0297901BE44E}
+		{DD5CAE30-A7A0-40F7-988A-DA2EEF23A15F} = {DDB10E20-29CF-47AF-9D14-0297901BE44E}
+		{029635CE-2EC6-4DF5-A39A-53EB0CF63944} = {DDB10E20-29CF-47AF-9D14-0297901BE44E}
+		{09EAC838-201D-418E-A792-D98B663D9D79} = {18D86BFC-D209-4259-8BF2-5E437C3B3D89}
+		{DE91FBFE-E0BA-4F19-90B4-03230303D932} = {18D86BFC-D209-4259-8BF2-5E437C3B3D89}
+		{24FDD15E-8349-4C1E-9293-44B01CD2340C} = {DD5CAE30-A7A0-40F7-988A-DA2EEF23A15F}
+		{CE0B19B1-E1C2-4D9A-9DF4-529E34EDF013} = {029635CE-2EC6-4DF5-A39A-53EB0CF63944}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{09EAC838-201D-418E-A792-D98B663D9D79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09EAC838-201D-418E-A792-D98B663D9D79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09EAC838-201D-418E-A792-D98B663D9D79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09EAC838-201D-418E-A792-D98B663D9D79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE91FBFE-E0BA-4F19-90B4-03230303D932}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE91FBFE-E0BA-4F19-90B4-03230303D932}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE91FBFE-E0BA-4F19-90B4-03230303D932}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE91FBFE-E0BA-4F19-90B4-03230303D932}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24FDD15E-8349-4C1E-9293-44B01CD2340C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24FDD15E-8349-4C1E-9293-44B01CD2340C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24FDD15E-8349-4C1E-9293-44B01CD2340C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24FDD15E-8349-4C1E-9293-44B01CD2340C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE0B19B1-E1C2-4D9A-9DF4-529E34EDF013}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE0B19B1-E1C2-4D9A-9DF4-529E34EDF013}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE0B19B1-E1C2-4D9A-9DF4-529E34EDF013}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE0B19B1-E1C2-4D9A-9DF4-529E34EDF013}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
