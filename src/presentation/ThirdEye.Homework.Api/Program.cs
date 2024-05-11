@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using ThirdEye.Homework.Application;
 using ThirdEye.Homework.Persistence;
+using ThirdEye.Homework.ThirdEyeAnalyticsService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services
     .AddEndpointsApiExplorer()
     .AddSwaggerGen()
     .AddPersistence(builder.Configuration)
+    .AddThirdEyeService(builder.Configuration)
     .AddCors()
     .AddMediatR(c => c.RegisterServicesFromAssembly(applicationAssembly));
 

@@ -23,4 +23,12 @@ public class ScenarioSpaceController: ControllerBase
         var result = await _mediator.Send(new ScenarioSpaceListQuery(), cancellationToken);
         return Ok(result);
     }
+    
+    [HttpGet("Summary")]
+    [ProducesResponseType(typeof(IList<ScenarioSpaceSummaryDto>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> ScenarioSpaceSummary(string name, CancellationToken cancellationToken = default)
+    {
+        var result = await _mediator.Send(new ScenarioSpaceSummaryCommand() { Name = name}, cancellationToken);
+        return Ok(result);
+    }
 }

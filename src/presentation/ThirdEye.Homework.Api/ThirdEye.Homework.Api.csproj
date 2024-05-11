@@ -18,6 +18,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\core\ThirdEye.Homework.Application\ThirdEye.Homework.Application.csproj" />
       <ProjectReference Include="..\..\infrastructure\ThirdEye.Homework.Persistence\ThirdEye.Homework.Persistence.csproj" />
+      <ProjectReference Include="..\..\infrastructure\ThirdEye.Homework.ThirdEyeAnalyticsService\ThirdEye.Homework.ThirdEyeAnalyticsService.csproj" />
     </ItemGroup>
 
 </Project>
