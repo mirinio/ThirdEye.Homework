@@ -1,4 +1,5 @@
 using ThirdEye.Homework.Application;
+using ThirdEye.Homework.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services
     .AddEndpointsApiExplorer()
     .AddSwaggerGen()
+    .AddPersistence()
     .AddCors()
     .AddMediatR(c => c.RegisterServicesFromAssembly(applicationAssembly));
 

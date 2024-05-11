@@ -13,6 +13,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\core\ThirdEye.Homework.Application\ThirdEye.Homework.Application.csproj" />
+      <ProjectReference Include="..\..\infrastructure\ThirdEye.Homework.Persistence\ThirdEye.Homework.Persistence.csproj" />
     </ItemGroup>
 
 </Project>

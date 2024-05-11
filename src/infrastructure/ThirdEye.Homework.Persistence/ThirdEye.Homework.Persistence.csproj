@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\core\ThirdEye.Homework.Application\ThirdEye.Homework.Application.csproj" />
+    </ItemGroup>
+
 </Project>

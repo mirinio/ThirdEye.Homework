@@ -1,4 +1,5 @@
 using MediatR;
+using ThirdEye.Homework.Application.Queries;
 using ThirdEye.Homework.Application.UseCases.ScenarioSpace.Models;
 
 namespace ThirdEye.Homework.Application.UseCases.ScenarioSpace;
@@ -9,21 +10,15 @@ public class ScenarioSpaceListQuery : IRequest<IList<ScenarioSpaceDto>>
 
 internal sealed class ScenarioSpaceListQueryHandler : IRequestHandler<ScenarioSpaceListQuery, IList<ScenarioSpaceDto>>
 {
+    private readonly IScenarioSpaceQueries _scenarioSpaceQueries;
+
+    public ScenarioSpaceListQueryHandler(IScenarioSpaceQueries scenarioSpaceQueries)
+    {
+        _scenarioSpaceQueries = scenarioSpaceQueries;
+    }
+
     public async Task<IList<ScenarioSpaceDto>> Handle(ScenarioSpaceListQuery request, CancellationToken cancellationToken)
     {
-        var list = new List<ScenarioSpaceDto>()
-        {
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Name1"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Name2"
-            }
-        };
-        return await Task.FromResult(list);
+        return await _scenarioSpaceQueries.GetScenarioSpacesAsync();
     }
 }
