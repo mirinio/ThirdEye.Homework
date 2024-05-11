@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
 using ThirdEye.Homework.Application;
 using ThirdEye.Homework.Persistence;
 
@@ -5,12 +7,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 var applicationAssembly = typeof(ApplicationAssembly).Assembly;
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(o =>
+    {
+        o.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+        o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
 builder.Services
     .AddEndpointsApiExplorer()
     .AddSwaggerGen()
-    .AddPersistence()
+    .AddPersistence(builder.Configuration)
     .AddCors()
     .AddMediatR(c => c.RegisterServicesFromAssembly(applicationAssembly));
 
@@ -21,6 +28,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    
+    using (var scope = app.Services.CreateScope())
+    {
+        scope.ServiceProvider.GetRequiredService<ThirdEyeHomeworkDbContext>().Database.Migrate();
+    }
 }
 
 
