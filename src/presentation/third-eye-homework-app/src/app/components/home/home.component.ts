@@ -2,13 +2,17 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { ButtonModule } from 'primeng/button';
 import { ChartModule } from 'primeng/chart';
 import { ApiClientService } from '../../services/api-client/api-client.service';
+import { AsyncPipe } from '@angular/common';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     ButtonModule,
-    ChartModule
+    ChartModule,
+    AsyncPipe,
+    CardModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -19,11 +23,9 @@ export class HomeComponent implements OnInit {
   options: any;
 
   private readonly apiClient = inject(ApiClientService);
+  protected readonly scenarioSpaces$ = this.apiClient.getScenarioSpaces();
 
   ngOnInit() {
-
-    this.apiClient.getScenarioSpaces().subscribe((x)=> console.log(x));
-
 
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
@@ -81,5 +83,10 @@ export class HomeComponent implements OnInit {
         }
       }
     };
+  }
+
+
+  loadSummary(id: string) {
+    console.log('load summary', id);
   }
 }
