@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
 import { AsyncPipe, NgClass } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -6,7 +6,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { PortfolioAsset, PortfoliosSimulation } from '../../models/portfolio-simulation.model';
 import { ApiClientService } from '../../services/api-client/api-client.service';
-import { BehaviorSubject, first, map, tap } from 'rxjs';
+import { BehaviorSubject, first, map } from 'rxjs';
 import { AssetClassCashType } from '../../models/scenario-space.model';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
@@ -125,27 +125,27 @@ export class AssetClassSummaryComponent implements OnInit {
   simulate(): void {
     this.form.updateValueAndValidity();
     if (this.form.valid && this.scenarioSpaceSubject.value && this.form.controls.length) {
-      console.log(this.scenarioSpaceSubject.value);
+
       const simulation = this.createPortfolio(this.scenarioSpaceSubject.value.cashType);
       this.apiClient.simulatePortfolio(simulation, this.scenarioSpaceSubject.value.name)
-        .pipe(first(), tap((x) => console.log(x)),map((data) => {
+        .pipe(first(), map((data) => {
           const totals = Object.keys(data.wealth.total).map<ChartDataSet>(key => ({
             label: `wealth-total-${key}`,
             data: data.wealth.total[key],
             fill: false,
-            tension: 0.4,
+            tension: 0.4
           }));
 
           const loans = Object.keys(data.wealth.loans).map<ChartDataSet>(key => ({
             label: `wealth-loans-${key}`,
             data: data.wealth.loans[key],
             fill: false,
-            tension: 0.4,
+            tension: 0.4
           }));
 
           return [...totals, ...loans];
         })).subscribe(data => this.chartData$.next({
-        labels: range(1,157).map(String),
+        labels: range(1, 157).map(String),
         datasets: data
       }));
     }
