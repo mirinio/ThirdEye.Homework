@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { ChartModule } from 'primeng/chart';
+import { ApiClientService } from '../../services/api-client/api-client.service';
 
 @Component({
   selector: 'app-home',
@@ -17,8 +18,13 @@ export class HomeComponent implements OnInit {
   data: any;
   options: any;
 
+  private readonly apiClient = inject(ApiClientService);
 
   ngOnInit() {
+
+    this.apiClient.testBackendCall().subscribe((x)=> console.log(x));
+
+
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
     const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
