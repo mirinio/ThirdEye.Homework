@@ -4,21 +4,21 @@ using ThirdEye.Homework.Application.UseCases.ScenarioSpace.Models;
 
 namespace ThirdEye.Homework.Application.UseCases.ScenarioSpace;
 
-public class ScenarioSpaceSummaryCommand : IRequest<ScenarioSpaceSummaryDto>
+public class ScenarioSpaceSummaryQuery : IRequest<ScenarioSpaceSummaryDto>
 {
     public string Name { get; set; }
 }
 
-internal sealed class ScenarioSpaceSummaryCommandHandler : IRequestHandler<ScenarioSpaceSummaryCommand, ScenarioSpaceSummaryDto>
+internal sealed class ScenarioSpaceSummaryQueryHandler : IRequestHandler<ScenarioSpaceSummaryQuery, ScenarioSpaceSummaryDto>
 {
     private readonly IPortfolioAnalyticsService _analyticsService;
 
-    public ScenarioSpaceSummaryCommandHandler(IPortfolioAnalyticsService analyticsService)
+    public ScenarioSpaceSummaryQueryHandler(IPortfolioAnalyticsService analyticsService)
     {
         _analyticsService = analyticsService;
     }
 
-    public async Task<ScenarioSpaceSummaryDto> Handle(ScenarioSpaceSummaryCommand request, CancellationToken cancellationToken)
+    public async Task<ScenarioSpaceSummaryDto> Handle(ScenarioSpaceSummaryQuery request, CancellationToken cancellationToken)
     {
         var result = await _analyticsService.GetScenarioSpaceSummaryByNameAsync(request.Name);
         return result;
