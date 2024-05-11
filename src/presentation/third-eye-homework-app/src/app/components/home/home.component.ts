@@ -4,6 +4,8 @@ import { ChartModule } from 'primeng/chart';
 import { ApiClientService } from '../../services/api-client/api-client.service';
 import { AsyncPipe } from '@angular/common';
 import { CardModule } from 'primeng/card';
+import { BehaviorSubject, map, Observable, of, switchMap } from 'rxjs';
+import { AssetClassSummary, AssetClassSummaryComponent } from '../asset-class-summary/asset-class-summary.component';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +14,8 @@ import { CardModule } from 'primeng/card';
     ButtonModule,
     ChartModule,
     AsyncPipe,
-    CardModule
+    CardModule,
+    AssetClassSummaryComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -24,6 +27,13 @@ export class HomeComponent implements OnInit {
 
   private readonly apiClient = inject(ApiClientService);
   protected readonly scenarioSpaces$ = this.apiClient.getScenarioSpaces();
+  protected readonly scenarioSpaceSubject = new BehaviorSubject<string | undefined>(undefined);
+  protected readonly assetClasses$: Observable<AssetClassSummary[]> = this.scenarioSpaceSubject.pipe(switchMap(name => {
+    if (!name) return of([]);
+    console.log(name);
+    return this.apiClient.getScenarioSpaceSummaryByName(name).pipe(map(summary =>
+      Object.keys(summary.asset_classes).map<AssetClassSummary>(asset => ({ name: asset, allocation: 0 }))));
+  }));
 
   ngOnInit() {
 
@@ -85,8 +95,7 @@ export class HomeComponent implements OnInit {
     };
   }
 
-
-  loadSummary(id: string) {
-    console.log('load summary', id);
+  loadSummary(name: string) {
+    this.scenarioSpaceSubject.next(name);
   }
 }
