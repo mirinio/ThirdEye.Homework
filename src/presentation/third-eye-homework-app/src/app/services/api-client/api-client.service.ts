@@ -10,7 +10,8 @@ export class ApiClientService {
   private readonly baseUrl = inject(API_BASE_URL);
   private http = inject(HttpClient);
 
-  testBackendCall(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/WeatherForecast`);
+  getScenarioSpaces(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/ScenarioSpace`);
   }
+
 }

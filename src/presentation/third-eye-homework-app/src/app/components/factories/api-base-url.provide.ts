@@ -2,7 +2,7 @@ import { InjectionToken } from "@angular/core";
 
 export function apiBaseUrlFactory(): string {
   if (/localhost:4200/.test(window.location.origin)) {
-    return 'https://localhost:44355/api';
+    return 'https://localhost:7244/api';
   }
 
   return 'https://api.' + window.location.hostname;

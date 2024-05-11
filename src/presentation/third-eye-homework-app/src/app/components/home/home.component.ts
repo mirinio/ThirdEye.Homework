@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
 
-    this.apiClient.testBackendCall().subscribe((x)=> console.log(x));
+    this.apiClient.getScenarioSpaces().subscribe((x)=> console.log(x));
 
 
     const documentStyle = getComputedStyle(document.documentElement);
