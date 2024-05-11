@@ -18,7 +18,8 @@ public class ScenarioSpaceQueries : IScenarioSpaceQueries
         return await _context.ScenarioSpaces.Select(s => new ScenarioSpaceDto()
         {
             Id = s.Id,
-            Name = s.Name
+            Name = s.Name,
+            AssetClassCashType = s.AssetClassCashType,
         }).ToListAsync(cancellationToken);
     }
 }

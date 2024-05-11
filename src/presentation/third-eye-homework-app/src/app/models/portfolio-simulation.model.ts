@@ -27,3 +27,13 @@ export interface PortfolioAsset {
   asset_mgmt_fee: number;
   initial_load_fee: number;
 }
+
+
+export interface AlphaSimulationData {
+  wealth: Wealth;
+}
+
+export interface Wealth {
+  total: { [key: string]: number[] };
+  loans: { [key: string]: number[] };
+}

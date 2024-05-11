@@ -1,6 +1,6 @@
 <div class="flex bg-primary shadow-5">
 @for (item of scenarioSpaces$ | async; track item.id) {
-  <div class="flex font-semibold p-3 m-1 hover:bg-cyan-500 cursor-pointer" (click)="loadSummary(item.name)">
+  <div class="flex font-semibold p-3 m-1 hover:bg-cyan-500 cursor-pointer" (click)="loadSummary(item)">
     {{ item.name }}
   </div>
 } @empty {
@@ -10,8 +10,4 @@
 
 <p-card class="m-5">
   <app-asset-class-summary [assetClasses]="scenarioAssetClassSummary$ | async"></app-asset-class-summary>
-</p-card>
-
-<p-card class="m-5">
-  <p-chart type="line" [data]="data" [options]="options" />
 </p-card>

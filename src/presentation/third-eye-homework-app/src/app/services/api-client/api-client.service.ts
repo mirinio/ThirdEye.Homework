@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { API_BASE_URL } from '../../factories/api-base-url.provide';
 import { ScenarioSpace } from '../../models/scenario-space.model';
 import { ScenarioSpaceSummary } from '../../models/scenario-space-summary.model';
-import { PortfoliosSimulation } from '../../models/portfolioSimulation.model';
+import { AlphaSimulationData, PortfoliosSimulation } from '../../models/portfolio-simulation.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +24,8 @@ export class ApiClientService {
     });
   }
 
-  simulatePortfolio(portfolioSimulation: PortfoliosSimulation, name: string): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/Simulation`, portfolioSimulation, {
+  simulatePortfolio(portfolioSimulation: PortfoliosSimulation, name: string): Observable<AlphaSimulationData> {
+    return this.http.post<AlphaSimulationData>(`${this.baseUrl}/Simulation`, portfolioSimulation, {
       headers: this.headers,
       observe: 'body',
       responseType: 'json',

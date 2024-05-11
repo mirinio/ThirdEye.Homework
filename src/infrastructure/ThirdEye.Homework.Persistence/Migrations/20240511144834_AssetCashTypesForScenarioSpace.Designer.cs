@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ThirdEye.Homework.Persistence;
 
@@ -11,9 +12,11 @@ using ThirdEye.Homework.Persistence;
 namespace ThirdEye.Homework.Persistence.Migrations
 {
     [DbContext(typeof(ThirdEyeHomeworkDbContext))]
-    partial class ThirdEyeHomeworkDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240511144834_AssetCashTypesForScenarioSpace")]
+    partial class AssetCashTypesForScenarioSpace
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

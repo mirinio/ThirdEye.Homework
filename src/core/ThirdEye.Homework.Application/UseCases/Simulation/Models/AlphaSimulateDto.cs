@@ -13,4 +13,5 @@ public class AlphaSimulateDto
 public class WealthDto
 {
     public Dictionary<string, float[]> Total { get; set; }
+    public Dictionary<string, float[]> Loans { get; set; }
 }

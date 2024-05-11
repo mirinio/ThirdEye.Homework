@@ -16,3 +16,8 @@
     </div>
   }
 </div>
+
+ @if(chartData$ | async; as data) {
+   <p-chart type="line" [data]="data" [options]="options" />
+ }
+
