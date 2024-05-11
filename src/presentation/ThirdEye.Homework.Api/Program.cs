@@ -1,13 +1,16 @@
+using ThirdEye.Homework.Application;
+
 var builder = WebApplication.CreateBuilder(args);
 
+var applicationAssembly = typeof(ApplicationAssembly).Assembly;
 
 builder.Services.AddControllers();
 
 builder.Services
     .AddEndpointsApiExplorer()
     .AddSwaggerGen()
-    .AddCors();
-
+    .AddCors()
+    .AddMediatR(c => c.RegisterServicesFromAssembly(applicationAssembly));
 
 var app = builder.Build();
 
