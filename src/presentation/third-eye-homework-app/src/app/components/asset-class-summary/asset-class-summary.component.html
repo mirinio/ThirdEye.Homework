@@ -1,11 +1,8 @@
-
-<div class="flex flex-row flex-wrap p-2 ">
+<div class="flex flex-row flex-wrap p-2">
   @for (group of form.controls; track group; let i = $index) {
     <div [formGroup]="group" class="m-3">
-      <input class="mt-2 mb-2 mr-1" type="text" pInputText formControlName="assetName" />
+      <input class="mt-2 mb-2 mr-1" type="text" pInputText formControlName="assetName"/>
       <p-inputNumber formControlName="allocation"/>
-
-
     </div>
   } @empty {
     <span>No asset classes found.</span>
@@ -17,7 +14,7 @@
   }
 </div>
 
- @if(chartData$ | async; as data) {
-   <p-chart type="line" [data]="data" [options]="options" />
- }
+@if (chartData$ | async; as data) {
+  <p-chart type="line" [data]="data" [options]="options" />
+}
 

@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { AsyncPipe, NgClass } from '@angular/common';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
@@ -50,7 +50,8 @@ export interface AssetClassGroup {
     InputTextModule,
     ButtonModule,
     CardModule,
-    ChartModule
+    ChartModule,
+    NgClass
   ],
   templateUrl: './asset-class-summary.component.html',
   styleUrl: './asset-class-summary.component.scss',
@@ -68,9 +69,7 @@ export class AssetClassSummaryComponent implements OnInit {
   } | undefined>(undefined);
 
   protected chartData$ = new BehaviorSubject<Chart | undefined>(undefined);
-
-  data: any;
-  options: any;
+  protected options: any;
 
   @Input() set assetClasses(scenario: ScenarioAssetClassesSummary | null) {
     if (!scenario || !scenario.assetClasses.length) return;
@@ -86,8 +85,6 @@ export class AssetClassSummaryComponent implements OnInit {
 
 
   ngOnInit() {
-
-
     const textColor = this.documentStyle.getPropertyValue('--text-color');
     const textColorSecondary = this.documentStyle.getPropertyValue('--text-color-secondary');
     const surfaceBorder = this.documentStyle.getPropertyValue('--surface-border');
@@ -126,7 +123,8 @@ export class AssetClassSummaryComponent implements OnInit {
   }
 
   simulate(): void {
-    if (this.scenarioSpaceSubject.value && this.form.controls.length) {
+    this.form.updateValueAndValidity();
+    if (this.form.valid && this.scenarioSpaceSubject.value && this.form.controls.length) {
       console.log(this.scenarioSpaceSubject.value);
       const simulation = this.createPortfolio(this.scenarioSpaceSubject.value.cashType);
       this.apiClient.simulatePortfolio(simulation, this.scenarioSpaceSubject.value.name)
@@ -156,7 +154,7 @@ export class AssetClassSummaryComponent implements OnInit {
   private createAssetClassGroup(asset: AssetClassAllocation): FormGroup<AssetClassGroup> {
     return this.fb.group<AssetClassGroup>({
       assetName: this.fb.control<string | null>({ value: asset.name, disabled: true }),
-      allocation: this.fb.control<number | null>(asset.allocation)
+      allocation: this.fb.control<number | null>(asset.allocation, [Validators.required, Validators.min(1)])
     });
   }
 
